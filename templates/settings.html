@@ -1,0 +1,158 @@
+<head>
+    <script>
+        // Function to update the current status
+        function updateStatus() {
+            var status = document.getElementById('currentStatus').value;
+            fetch('/update-status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ current_status: status }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Function to update the settings
+        function updateSettings() {
+            // Fetch your form
+            var form = document.getElementById('settingsForm');
+
+            // Create a FormData object from the form
+            var formData = new FormData(form);
+
+            formData.append('enable_scraping', document.getElementById('enable_scraping').checked);
+            formData.append('frame_id', document.getElementById('frame_id').value);
+            formData.append('refresh_time', document.getElementById('refresh_time').value);
+            formData.append('valid_date', document.getElementById('valid_date').value);
+            formData.append('url', document.getElementById('url').value);
+
+            // Send the form data to your server-side function
+            fetch('/settings', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+
+    </head>
+    </head>
+<body>
+    <form id="settingsForm" method="post">
+        <h3>Time Settings</h3>
+    <table>
+        <tr>
+            <th>Day</th>
+            <th>Morning</th>
+            <th>Afternoon</th>
+        </tr>
+        <tr>
+            <td>Montag</td>
+            <td><input type="text" id="Montag_morning" name="Montag_morning" value="{{ times['Montag'][0] }}"></td>
+            <td><input type="text" id="Montag_afternoon" name="Montag_afternoon" value="{{ times['Montag'][1] }}"></td>
+        </tr>
+        <tr>
+            <td>Dienstag</td>
+            <td><input type="text" id="Dienstag_morning" name="Dienstag_morning" value="{{ times['Dienstag'][0] }}"></td>
+            <td><input type="text" id="Dienstag_afternoon" name="Dienstag_afternoon" value="{{ times['Dienstag'][1] }}"></td>
+        </tr>
+        <tr>
+            <td>Mittwoch</td>
+            <td><input type="text" id="Mittwoch_morning" name="Mittwoch_morning" value="{{ times['Mittwoch'][0] }}"></td>
+            <td><input type="text" id="Mittwoch_afternoon" name="Mittwoch_afternoon" value="{{ times['Mittwoch'][1] }}"></td>
+        </tr>
+        <tr>
+            <td>Donnerstag</td>
+            <td><input type="text" id="Donnerstag_morning" name="Donnerstag_morning" value="{{ times['Donnerstag'][0] }}"></td>
+            <td><input type="text" id="Donnerstag_afternoon" name="Donnerstag_afternoon" value="{{ times['Donnerstag'][1] }}"></td>
+        </tr>
+        <tr>
+            <td>Freitag</td>
+            <td><input type="text" id="Freitag_morning" name="Freitag_morning" value="{{ times['Freitag'][0] }}"></td>
+            <td><input type="text" id="Freitag_afternoon" name="Freitag_afternoon" value="{{ times['Freitag'][1] }}"></td>
+        </tr>
+    </table>
+<h3>Edit Status Options</h3>
+{% for status, properties in statuses.items() %}
+    <h4>{{ status }}</h4>
+    {% for property_name, property_value in properties.items() %}
+        <label for="{{ status }}_{{ property_name }}">{{ status }} {{ property_name.replace('-', ' ').title() }}:</label>
+        <input type="text" id="{{ status }}_{{ property_name }}" name="{{ status }}_{{ property_name }}" value="{{ property_value }}">
+        <br>
+    {% endfor %}
+{% endfor %}
+
+
+<h3>Edit CSS Settings</h3>
+
+{% for var_name, value in css_vars.items() %}
+    {% if var_name == 'animation-speed' %}
+        <h3>Animation Settings</h3>
+    {% elif var_name == 'table-font-size' %}
+        <h3>Table Font & Border Settings</h3>
+    {% endif %}
+    <label for="{{ var_name }}">{{ var_name.replace('-', ' ').title() }}:</label>
+    {% if value.startswith('#') or value.startswith('rgb') or value in ['red', 'green', 'blue', 'yellow', 'black', 'white'] %}
+        <!-- Render a color preview -->
+        <input type="text" id="{{ var_name }}" name="{{ var_name }}" value="{{ value }}">
+        <span style="display: inline-block; width: 20px; height: 20px; background-color: {{ value }};"></span>
+    {% else %}
+        <input type="text" id="{{ var_name }}" name="{{ var_name }}" value="{{ value }}">
+    {% endif %}
+    <br>
+{% endfor %}
+<!-- For enable_scraping -->
+<label for="enable_scraping">Enable Scraping:</label>
+<input type="checkbox" id="enable_scraping" name="enable_scraping" {% if enable_scraping %} checked {% endif %}>
+<br>
+
+<h3>Scrapper Config</h3>
+
+<label for="enable_scraping">URL:</label>
+<input type="text" id="url" name="url"  value="{{ scrapper_config['url'] }}">
+<br>
+
+<!-- For frame_id -->
+<label for="frame_id">Frame ID:</label>
+<input type="text" id="frame_id" name="frame_id" value="{{ scrapper_config['frame_id'] }}">
+<br>
+
+<!-- For refresh_time -->
+<label for="refresh_time">Refresh Time:</label>
+<input type="number" id="refresh_time" name="refresh_time" value="{{ scrapper_config['refresh_time'] }}">
+<br>
+
+<!-- For valid_date -->
+<label for="valid_date">Valid Date:</label>
+<input type="text" id="valid_date" name="valid_date" value="{{ scrapper_config['valid_date'] }}">
+<br>
+<input type="button" value="Update Settings" onclick="updateSettings()">
+
+
+<h3>Edit Current Status</h3>
+    <select id="currentStatus">
+        {% for status, options in statuses.items() %}
+            <option value="{{ status }}" {% if status == current_status %} selected {% endif %}>{{ status }}</option>
+        {% endfor %}
+    </select>
+    <input type="button" value="Update Status" onclick="updateStatus()">
+</form>
+
+
+
+
+
+</body>

@@ -1,0 +1,26 @@
+digraph "packages" {
+rankdir=BT
+charset="utf-8"
+"jira_fields" [color="black", label=<jira_fields>, shape="box", style="solid"];
+"jira_fields.JiraLibs" [color="black", label=<jira_fields.JiraLibs>, shape="box", style="solid"];
+"jira_fields.JiraLibs.JiraFields" [color="black", label=<jira_fields.JiraLibs.JiraFields>, shape="box", style="solid"];
+"jira_fields.JiraLibs.JiraFieldsConverter" [color="black", label=<jira_fields.JiraLibs.JiraFieldsConverter>, shape="box", style="solid"];
+"jira_fields.JiraLibs.JiraInterface" [color="black", label=<jira_fields.JiraLibs.JiraInterface>, shape="box", style="solid"];
+"jira_fields.JiraLibs.SmartChecklistContainer" [color="black", label=<jira_fields.JiraLibs.SmartChecklistContainer>, shape="box", style="solid"];
+"jira_fields.JiraLibs.issue_models" [color="black", label=<jira_fields.JiraLibs.issue_models>, shape="box", style="solid"];
+"jira_fields.JiraLibs.my_config" [color="black", label=<jira_fields.JiraLibs.my_config>, shape="box", style="solid"];
+"jira_fields.main" [color="black", label=<jira_fields.main>, shape="box", style="solid"];
+"jira_fields.test" [color="black", label=<jira_fields.test>, shape="box", style="solid"];
+"jira_fields.JiraLibs.JiraFields" -> "jira_fields.JiraLibs.JiraInterface" [arrowhead="open", arrowtail="none"];
+"jira_fields.JiraLibs.JiraFields" -> "jira_fields.JiraLibs.issue_models" [arrowhead="open", arrowtail="none"];
+"jira_fields.JiraLibs.JiraInterface" -> "jira_fields.JiraLibs.issue_models" [arrowhead="open", arrowtail="none"];
+"jira_fields.JiraLibs.JiraInterface" -> "jira_fields.JiraLibs.my_config" [arrowhead="open", arrowtail="none"];
+"jira_fields.JiraLibs.SmartChecklistContainer" -> "jira_fields.JiraLibs.JiraInterface" [arrowhead="open", arrowtail="none"];
+"jira_fields.JiraLibs.SmartChecklistContainer" -> "jira_fields.JiraLibs.issue_models" [arrowhead="open", arrowtail="none"];
+"jira_fields.main" -> "jira_fields.JiraLibs.JiraFields" [arrowhead="open", arrowtail="none"];
+"jira_fields.main" -> "jira_fields.JiraLibs.JiraFieldsConverter" [arrowhead="open", arrowtail="none"];
+"jira_fields.main" -> "jira_fields.JiraLibs.JiraInterface" [arrowhead="open", arrowtail="none"];
+"jira_fields.main" -> "jira_fields.JiraLibs.my_config" [arrowhead="open", arrowtail="none"];
+"jira_fields.test" -> "jira_fields.JiraLibs.JiraInterface" [arrowhead="open", arrowtail="none"];
+"jira_fields.test" -> "jira_fields.JiraLibs.issue_models" [arrowhead="open", arrowtail="none"];
+}

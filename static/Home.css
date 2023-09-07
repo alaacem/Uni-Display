@@ -1,0 +1,170 @@
+:root {
+    --header-bg-color: #242424;
+    --table-text-color: #000;
+    --table-bg-color: #47ab37;
+    --table-border-color: black;
+    --table-border-color: black;
+    --animation-speed: 3s;
+    --table-font-size: 2.2vw;
+    --table-border-thickness: 0.3vh;
+    --table-text: 4.9vw;
+    --word-font-size: calc(5vw + 3vh + 1.5vmin);
+    --word-color: green;
+    --shadow: green;
+
+    --word_border_color: green;
+
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    align-self: center;
+    justify-content: space-between;
+    margin: 0;
+    background-image:linear-gradient(#cccccc, var(--word-color));
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--header-bg-color);
+}
+.content .text-above {
+    position: absolute;
+    display: flex;
+
+    justify-content: space-between;
+    font-size: 3.5em; /* Adjust the font size as needed. */
+}
+.logo-text {
+    font-size: calc(2.3vw + 2.3vh + 0.5vmin);
+    color: #fff;
+    margin-left: 20px;
+    transform: translate(-3%, -3%);
+}
+.logo-text .line1 {
+    font-weight: bold;
+    font-size: calc(2vw + 2vh);  /* Adjust as required */
+}
+
+.logo-text .line2 {
+    font-weight: normal;
+    font-size: calc(1.5vw + 1.5vh);  /* Adjust as required */
+}
+.text-above, .text-below {
+    position: absolute;
+    font-size:var(--table-text);
+    left: 1vw;
+}
+
+.text-above {
+    bottom: 52%;  /* Adjust this value to position the text above the table. */
+}
+
+.text-below {
+    top: 52%;  /* Adjust this value to position the text below the table. */
+}
+.header .logo {
+    position: sticky;
+    width: 40vw;
+    height: auto;
+
+    transform: translate(-10%, -10%);
+}
+
+.opening-times {
+    position: absolute;
+    table-layout: fixed;
+    vertical-align: middle;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 98vw;
+    border-collapse: collapse;
+    border-bottom: 3px solid #000;
+    font-size: var(--table-font-size);
+}
+
+.opening-times td {
+    border: var(--table-border-thickness) solid var(--table-border-color);
+    text-align: center;
+    vertical-align: middle;
+
+    padding: 1vw;  /* Adjust padding based on viewport width */
+    color: var(--table-text-color);
+}
+
+.opening-times tr:nth-child(even) {
+    font-weight: var(--table-first-row-font-weight);
+
+}
+
+.opening-times tr:first-child td {
+    font-family: 'Exo 2', sans-serif;
+
+    font-weight: bold;
+    font-size: 1.2em; /* Adjust as required */
+}
+
+.word-box {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 10px solid var(--word_border_color);
+    animation: sway var(--animation-speed) infinite;
+    width: auto;
+    height: auto;
+    top: 80%;
+    right:3%;
+    padding: 10px;
+
+    transform: translateY(-50%,50%);
+}
+
+.word-content {
+    display: flex;  /* <-- Add this */
+    transform-origin: 50% 50%;
+    justify-content: center;  /* <-- Add this */
+    align-items: center;  /* <-- Add this */
+    font-family: 'Exo 2', sans-serif;
+    text-transform: uppercase;
+    font-size: var(--word-font-size);
+    font-weight: 700;
+    background-clip: text;
+    color:var(--word-color);
+    text-shadow:
+        1px 1px 1px var(--shadow),
+        1px 2px 1px var(--shadow),
+        1px 3px 1px var(--shadow),
+        1px 4px 1px var(--shadow),
+        1px 5px 1px var(--shadow),
+        1px 6px 1px var(--shadow),
+        1px 7px 1px var(--shadow),
+        1px 8px 1px var(--shadow),
+        1px 9px 1px var(--shadow),
+        1px 10px 1px var(--shadow),
+        1px 18px 6px rgba(16, 16, 16, 0.4),
+        1px 22px 10px rgba(16, 16, 16, 0.2),
+        1px 25px 35px rgba(16, 16, 16, 0.2),
+        1px 30px 60px rgba(16, 16, 16, 0.4);
+        transform-origin: 50% -32px;
+}
+
+@keyframes sway {
+    0%, 80%, 100% { transform: rotate(0deg); }
+    10%, 50% { transform: rotate(-5deg); }
+    30%, 70% { transform: rotate(5deg); }
+}

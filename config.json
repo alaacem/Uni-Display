@@ -1,0 +1,57 @@
+{
+    "css_vars": {
+        "header-bg-color": "#242424",
+        "table-text-color": "#000",
+        "table-bg-color": "#47ab37",
+        "table-border-color": "black",
+        "animation-speed": "3s",
+        "table-font-size": "2.2vw",
+        "table-border-thickness": "0.3vh",
+        "table-text": "4.9vw",
+        "word-font-size": "calc(5vw + 3vh + 1.5vmin)",
+        "word-color": "green",
+        "shadow": "green",
+        "word_border_color": "green"
+    },
+    "times": {
+        "Montag": [
+            "10:00 - 16:00 Uhr",
+            ""
+        ],
+        "Dienstag": [
+            "10:30 - 12:00",
+            "12:30 - 16:00 Uhr"
+        ],
+        "Mittwoch": [
+            "geschlossen",
+            ""
+        ],
+        "Donnerstag": [
+            "geschlossen",
+            ""
+        ],
+        "Freitag": [
+            "geschlossen",
+            ""
+        ]
+    },
+    "status": {
+        "Ge\u00f6ffnet": {
+            "word-color": "green"
+        },
+        "Geschlossen": {
+            "word-color": "red"
+        },
+        "Gleich zur\u00fcck": {
+            "word-color": "yellow"
+        }
+    },
+    "current_status": "Ge\u00f6ffnet",
+    "enable_scraping": true,
+    "scrapper_config": {
+        "url": "https://www.hs-kl.de/hochschule/servicestellen/rechenzentrum/servicepoints-und-hilfe",
+        "frame_id": "c872",
+        "refresh_time": "123",
+        "valid_date": "2"
+    }
+}

@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Öffnungszeiten</title>
+<link href="{{ url_for('static', filename='Home.css') }}" rel="stylesheet"/>
+
+<script>
+    function checkForRefresh() {
+        fetch('/should-refresh').then(response => response.json()).then(data => {
+            if (data.refresh) {
+                location.reload();
+            }
+        });
+
+    }
+
+    // Check every 5 seconds
+   // setInterval(checkForRefresh, 1000);
+</script>
+<script>
+
+    function sendCSSVars() {
+        // Extract CSS variables from the :root, excluding specific variables
+        var rootStyles = getComputedStyle(document.documentElement);
+        var cssVars = {
+          'word-color': rootStyles.getPropertyValue('--word-color').trim(),
+          'shadow': rootStyles.getPropertyValue('--shadow').trim(),
+        };
+
+        // Get the current_status_word from the HTML content
+        var currentStatusWord = document.querySelector(".word-content").textContent;
+
+        // Get the opening times from the table
+        var times = {};
+        ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"].forEach((day, index) => {
+          var morningTime = document.querySelector(`.opening-times tr:nth-child(2) td:nth-child(${index + 1})`).textContent;
+          var afternoonTime = document.querySelector(`.opening-times tr:nth-child(3) td:nth-child(${index + 1})`).textContent;
+          times[day] = [morningTime, afternoonTime];
+        });
+
+        // Send the CSS variables, current_status_word, and times to the server
+        fetch('/update-css-vars', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ cssVars, currentStatusWord, times }),
+        })
+        .then(response => response.json()) // Parse the JSON response
+        .then(data => {
+          if (data.refresh) { // If the server indicates a refresh is required
+            location.reload(); // Refresh the page
+          }
+        });
+      }
+
+      setInterval(sendCSSVars, 1000); // Call sendCSSVars every 5 seconds
+
+</script>
+
+</head>
+<body>
+
+<div class="header">
+<div class="logo-text">
+<span class="line1">RZ-Servicepoint</span><br>
+<span class="line2">Rechenzentrum Kaiserslautern</span>
+</div>
+<img alt="Logo" class="logo" src="{{ url_for('static', filename='logo.png') }}"/>
+</div>
+<h3 class="text-above">Unsere Öffnungszeiten:</h3>
+
+<table class="opening-times">
+    <tr>
+        <td>Montag</td>
+        <td>Dienstag</td>
+        <td>Mittwoch</td>
+        <td>Donnerstag</td>
+        <td>Freitag</td>
+    </tr>
+    <tr>
+        <td>{{ times['Montag'][0] }}</td>
+        <td>{{ times['Dienstag'][0] }}</td>
+        <td>{{ times['Mittwoch'][0] }}</td>
+        <td>{{ times['Donnerstag'][0] }}</td>
+        <td>{{ times['Freitag'][0] }}</td>
+    </tr>
+    <tr>
+        <td>{{ times['Montag'][1] }}</td>
+        <td>{{ times['Dienstag'][1] }}</td>
+        <td>{{ times['Mittwoch'][1] }}</td>
+        <td>{{ times['Donnerstag'][1] }}</td>
+        <td>{{ times['Freitag'][1] }}</td>
+    </tr>
+</table>
+<h3 class="text-below">This is the text below the table</h3>
+
+<div class="word-box">
+    <div class="word-content">{{current_status_word}}</div>
+</div>
+
+</body>
+</html>
