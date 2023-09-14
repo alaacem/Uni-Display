@@ -19,44 +19,61 @@
     }
 
     // Check every 5 seconds
-   // setInterval(checkForRefresh, 1000);
+    setInterval(checkForRefresh, 1000);
 </script>
 <script>
 
-    function sendCSSVars() {
-        // Extract CSS variables from the :root, excluding specific variables
-        var rootStyles = getComputedStyle(document.documentElement);
-        var cssVars = {
-          'word-color': rootStyles.getPropertyValue('--word-color').trim(),
-          'shadow': rootStyles.getPropertyValue('--shadow').trim(),
-        };
+  function sendCSSVars() {
+    // List of CSS variables you want to extract
+    var cssVarNames = [
+        'header-bg-color',
+        'table-text-color',
+        'table-bg-color',
+        'table-border-color',
+        'animation-speed',
+        'table-font-size',
+        'table-border-thickness',
+        'table-text',
+        'word-font-size',
+        'word-color',
+        'shadow',
+        'word_border_color'
+    ];
 
-        // Get the current_status_word from the HTML content
-        var currentStatusWord = document.querySelector(".word-content").textContent;
+    // Extract CSS variables from the :root
+    var rootStyles = getComputedStyle(document.documentElement);
+    var cssVars = {};
 
-        // Get the opening times from the table
-        var times = {};
-        ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"].forEach((day, index) => {
-          var morningTime = document.querySelector(`.opening-times tr:nth-child(2) td:nth-child(${index + 1})`).textContent;
-          var afternoonTime = document.querySelector(`.opening-times tr:nth-child(3) td:nth-child(${index + 1})`).textContent;
-          times[day] = [morningTime, afternoonTime];
-        });
+    cssVarNames.forEach(varName => {
+        cssVars[varName] = rootStyles.getPropertyValue('--' + varName).trim();
+    });
 
-        // Send the CSS variables, current_status_word, and times to the server
-        fetch('/update-css-vars', {
-          method: 'POST',
-          headers: {
+    // Get the current_status_word from the HTML content
+    var currentStatusWord = document.querySelector(".word-content").textContent;
+
+    // Get the opening times from the table
+    var times = {};
+    ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"].forEach((day, index) => {
+        var morningTime = document.querySelector(`.opening-times tr:nth-child(2) td:nth-child(${index + 1})`).textContent;
+        var afternoonTime = document.querySelector(`.opening-times tr:nth-child(3) td:nth-child(${index + 1})`).textContent;
+        times[day] = [morningTime, afternoonTime];
+    });
+
+    // Send the CSS variables, current_status_word, and times to the server
+    fetch('/update-css-vars', {
+        method: 'POST',
+        headers: {
             'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ cssVars, currentStatusWord, times }),
-        })
-        .then(response => response.json()) // Parse the JSON response
-        .then(data => {
-          if (data.refresh) { // If the server indicates a refresh is required
+        },
+        body: JSON.stringify({ cssVars, currentStatusWord, times }),
+    })
+    .then(response => response.json()) // Parse the JSON response
+    .then(data => {
+        if (data.refresh) { // If the server indicates a refresh is required
             location.reload(); // Refresh the page
-          }
-        });
-      }
+        }
+    });
+}
 
       setInterval(sendCSSVars, 1000); // Call sendCSSVars every 5 seconds
 
@@ -73,6 +90,7 @@
 <img alt="Logo" class="logo" src="{{ url_for('static', filename='logo.png') }}"/>
 </div>
 <h3 class="text-above">Unsere Öffnungszeiten:</h3>
+<p class="valid-date">Gültig bis: {{ valid_date }}</p>
 
 <table class="opening-times">
     <tr>

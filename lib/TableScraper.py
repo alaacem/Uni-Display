@@ -1,7 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
-
+from .ConfigManager import ConfigManager
 class TableScraper:
+
+
     def __init__(self, scrapper_config):
 
         self.url = scrapper_config['url']
@@ -76,3 +78,4 @@ class TableScraper:
         if results:
             return results
         return False
+

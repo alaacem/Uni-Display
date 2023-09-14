@@ -11,12 +11,12 @@
         "word-font-size": "calc(5vw + 3vh + 1.5vmin)",
         "word-color": "green",
         "shadow": "green",
-        "word_border_color": "green"
+        "word_border_color": "red"
     },
     "times": {
         "Montag": [
             "10:00 - 16:00 Uhr",
-            ""
+            "2"
         ],
         "Dienstag": [
             "10:30 - 12:00",
@@ -48,6 +48,7 @@
     },
     "current_status": "Ge\u00f6ffnet",
     "enable_scraping": true,
+    "valid_date": "12:30 - 16:00 Uhr",
     "scrapper_config": {
         "url": "https://www.hs-kl.de/hochschule/servicestellen/rechenzentrum/servicepoints-und-hilfe",
         "frame_id": "c872",

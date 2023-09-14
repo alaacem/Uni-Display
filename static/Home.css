@@ -12,7 +12,7 @@
     --word-color: green;
     --shadow: green;
 
-    --word_border_color: green;
+    --word_border_color: red;
 
 }
 
@@ -75,6 +75,14 @@ body {
 
 .text-below {
     top: 52%;  /* Adjust this value to position the text below the table. */
+}
+.valid-date {
+    position: absolute;         /* Keep consistent with .text-above and .text-below */
+    left: 1vw;                  /* Alignment similar to .text-above */
+    bottom: 48%;                /* Position it slightly below .text-above, adjust based on desired spacing */
+    font-size: 3.2vw;           /* Slightly smaller than --table-text for subtlety */
+    color: #333;                /* A muted color, can adjust based on your design preference */
+    font-weight: normal;        /* Keep it regular for now */
 }
 .header .logo {
     position: sticky;
